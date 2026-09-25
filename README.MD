@@ -1,4 +1,3 @@
-
 # Experiment 1 — Parallel Matrix Multiplication
 
 Implementation and benchmarking of a **4000 × 4000 matrix multiplication** problem across four computing models: **Sequential**, **OpenMP**, **MPI**, and **CUDA**.
@@ -27,36 +26,4 @@ Matrices **A** and **B** are initialized so every element is `1.0`; the expected
 
 Full analysis and observations: [`docs/06-results-and-comparison.md`](docs/06-results-and-comparison.md)
 
-## How to Run Each Part
-
-```bash
-# Part A — Sequential
-cd sequential
-gcc -O2 matrix_sequential.c -o matrix_sequential
-./matrix_sequential
-
-# Part B — OpenMP
-cd openmp
-export OMP_NUM_THREADS=8
-gcc -O2 -fopenmp matrix_openmp.c -o matrix_openmp
-./matrix_openmp
-
-# Part C — MPI (run from the Master node, after copying the binary to each worker)
-cd mpi
-mpicc -O2 matrix_mpi.c -o matrix_mpi
-scp matrix_mpi worker1:~/matrix_mpi
-scp matrix_mpi worker2:~/matrix_mpi
-scp matrix_mpi worker3:~/matrix_mpi
-mpirun -np 4 --hostfile hosts sh -c '$HOME/matrix_mpi'
-
-# Part D — CUDA
-cd cuda
-nvcc -O2 matrix_cuda.cu -o matrix_cuda
-./matrix_cuda
-```
-
-Detailed, step-by-step instructions are in [`docs/`](docs/) — start at [`docs/01-introduction.md`](docs/01-introduction.md).
-
-## Conclusion
-
-The experiment implements a single matrix multiplication problem using sequential CPU execution, OpenMP shared-memory parallelism, MPI distributed-memory parallelism, and CUDA GPU parallelism. CUDA delivered the highest measured performance, followed by OpenMP, then MPI, with sequential execution as the baseline — while every implementation was verified against the same expected result, `C[0][0] = 4000.00`.
+## Repository Structure
